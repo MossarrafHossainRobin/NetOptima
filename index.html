@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NetOptima Dashboard</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts (Inter) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- External Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="p-0 m-0 font-inter bg-gray-100 text-gray-900 transition-colors duration-300">
+    <!-- Scroll Progress Bar -->
+    <div id="progressBar" class="fixed top-0 left-0 h-1 z-50 transition-all duration-75 ease-out"></div>
+
+    <!-- Navigation Bar -->
+    <nav id="navbar" role="navigation" aria-label="Main Navigation" class="fixed top-0 left-0 w-full z-40 bg-white shadow-md transition-all duration-300 ease-in-out dark:bg-gray-800 dark:shadow-xl">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-gray-800 dark:text-white">NetOptima</a>
+            <div class="hidden md:flex space-x-6">
+                <a href="#overview" class="text-gray-600 hover:text-blue-600 transition-colors duration-200 dark:text-gray-300 dark:hover:text-blue-400">Overview</a>
+                <a href="#metrics" class="text-gray-600 hover:text-blue-600 transition-colors duration-200 dark:text-gray-300 dark:hover:text-blue-400">Metrics</a>
+                <a href="#reports" class="text-gray-600 hover:text-blue-600 transition-colors duration-200 dark:text-gray-300 dark:hover:text-blue-400">Reports</a>
+                <a href="#settings" class="text-gray-600 hover:text-blue-600 transition-colors duration-200 dark:text-gray-300 dark:hover:text-blue-400">Settings</a>
+            </div>
+            <!-- Mobile Menu Button -->
+            <button id="mobileMenuButton" class="md:hidden text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-gray-300 dark:focus:ring-blue-400" aria-label="Toggle mobile menu" aria-controls="mobileMenu" aria-expanded="false">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white shadow-md mt-2 dark:bg-gray-700">
+            <a href="#overview" class="block px-4 py-2 text-gray-600 hover:text-blue-600 dark:text-gray-200 dark:hover:text-blue-400">Overview</a>
+            <a href="#metrics" class="block px-4 py-2 text-gray-600 hover:text-blue-600 dark:text-gray-200 dark:hover:text-blue-400">Metrics</a>
+            <a href="#reports" class="block px-4 py-2 text-gray-600 hover:text-blue-600 dark:text-gray-200 dark:hover:text-blue-400">Reports</a>
+            <a href="#settings" class="block px-4 py-2 text-gray-600 hover:text-blue-600 dark:text-gray-200 dark:hover:text-blue-400">Settings</a>
+        </div>
+    </nav>
+
+    <main class="pt-20 pb-8">
+        <!-- Hero Section -->
+        <section class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-20 px-6 text-center shadow-lg">
+            <div class="container mx-auto">
+                <h1 class="text-4xl md:text-6xl font-extrabold mb-4 animate-fade-in-up">NetOptima: Real-time Network Insights</h1>
+                <p class="text-lg md:text-xl opacity-90 mb-8 animate-fade-in-up delay-100">Monitor, Optimize, and Secure Your Network Performance with Precision.</p>
+                <a href="#metrics" class="inline-block bg-white text-blue-700 font-bold py-3 px-8 rounded-full shadow-lg hover:bg-gray-100 transform hover:scale-105 transition-all duration-300 animate-fade-in-up delay-200">View Dashboard</a>
+            </div>
+        </section>
+
+        <div class="container mx-auto p-8 bg-white rounded-xl shadow-2xl max-w-6xl w-full mt-12 dark:bg-gray-800 dark:text-gray-100">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-10 dark:text-white">Network Performance Overview</h2>
+
+            <!-- Metric Cards Section -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                <div class="bg-blue-50 p-6 rounded-xl shadow-lg border border-blue-200 hover:shadow-xl transition-shadow duration-300 dark:bg-gray-700 dark:border-gray-600">
+                    <div class="flex items-center mb-3">
+                        <i class="fas fa-upload text-blue-600 text-3xl mr-4"></i>
+                        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-200">Bytes Sent</h3>
+                    </div>
+                    <p id="bytesSent" class="text-4xl font-bold text-blue-800 dark:text-blue-400">85.2 MB</p>
+                    <p class="text-gray-500 text-sm mt-2 dark:text-gray-400">Last 15 mins</p>
+                </div>
+                <div class="bg-green-50 p-6 rounded-xl shadow-lg border border-green-200 hover:shadow-xl transition-shadow duration-300 dark:bg-gray-700 dark:border-gray-600">
+                    <div class="flex items-center mb-3">
+                        <i class="fas fa-download text-green-600 text-3xl mr-4"></i>
+                        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-200">Bytes Received</h3>
+                    </div>
+                    <p id="bytesReceived" class="text-4xl font-bold text-green-800 dark:text-green-400">120.5 MB</p>
+                    <p class="text-gray-500 text-sm mt-2 dark:text-gray-400">Last 15 mins</p>
+                </div>
+                <div class="bg-yellow-50 p-6 rounded-xl shadow-lg border border-yellow-200 hover:shadow-xl transition-shadow duration-300 dark:bg-gray-700 dark:border-gray-600">
+                    <div class="flex items-center mb-3">
+                        <i class="fas fa-tachometer-alt text-yellow-600 text-3xl mr-4"></i>
+                        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-200">Latency</h3>
+                    </div>
+                    <p id="latency" class="text-4xl font-bold text-yellow-800 dark:text-yellow-400">25 ms</p>
+                    <p class="text-gray-500 text-sm mt-2 dark:text-gray-400">Average</p>
+                </div>
+            </div>
+
+            <!-- Chart Container with Time Range Selector -->
+            <div class="relative h-96 w-full mb-8 bg-gray-50 p-6 rounded-xl shadow-inner dark:bg-gray-700" id="metrics">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-200">Traffic Over Time</h3>
+                    <select id="timeRange" class="p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:text-white">
+                        <option value="15m">Last 15 Minutes</option>
+                        <option value="1h">Last 1 Hour</option>
+                        <option value="24h">Last 24 Hours</option>
+                    </select>
+                </div>
+                <canvas id="myLineChart"></canvas>
+            </div>
+
+            <!-- Reports Section -->
+            <div class="mt-12 text-center" id="reports">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 dark:text-white">Generate Network Report</h2>
+                <button id="generateReport" class="bg-blue-600 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-blue-700 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <i class="fas fa-file-pdf mr-2"></i> Download PDF Report
+                </button>
+                <p class="text-gray-600 mt-4 dark:text-gray-300">Generate a comprehensive PDF report of your network performance metrics.</p>
+            </div>
+
+            <!-- Placeholder Content -->
+            <div class="h-[1000px] bg-gray-50 mt-16 p-8 rounded-xl shadow-inner border border-gray-200 dark:bg-gray-700 dark:border-gray-600">
+                <h2 class="text-2xl font-semibold text-gray-700 mb-4 dark:text-gray-200">Detailed Network Activity</h2>
+                <p class="text-gray-600 dark:text-gray-300">This section displays detailed network metrics. Scroll to observe the progress bar and navbar effects.</p>
+                <p class="mt-4 text-gray-600 dark:text-gray-300">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                <p class="mt-4 text-gray-600 dark:text-gray-300">Curabitur pretium tincidunt lacus, eget volutpat mi. Fusce vel mi nec magna aliquet mollis. Proin ut ex eu felis malesuada bibendum. Donec nec justo id justo venenatis tincidunt. Sed vitae ex id turpis feugiat tincidunt. Nulla facilisi. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris efficitur, velit eu pharetra finibus, magna nulla efficitur magna, a maximus justo justo ac elit. Sed consectetur, odio at consectetur tincidunt, nisl odio consectetur odio, a consectetur odio odio a odio.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full bg-gray-900 text-white p-6 mt-12 dark:bg-gray-950">
+        <div class="container mx-auto text-center text-gray-300">
+            <p>&copy; 2025 NetOptima. All rights reserved.</p>
+            <p class="text-sm mt-2">Designed for comprehensive network performance monitoring and optimization.</p>
+            <div class="flex justify-center space-x-4 mt-4">
+                <a href="#" class="text-gray-400 hover:text-white transition-colors duration-200"><i class="fab fa-github"></i> GitHub</a>
+                <a href="#" class="text-gray-400 hover:text-white transition-colors duration-200"><i class="fas fa-envelope"></i> Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Theme Toggle Button -->
+    <button id="themeToggle" class="fixed bottom-20 right-6 bg-gray-800 text-white p-4 rounded-full shadow-lg hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 z-50 transition-all duration-300 dark:bg-gray-600 dark:hover:bg-gray-700" aria-label="Toggle theme">
+        <i class="fas fa-moon text-2xl"></i>
+    </button>
+
+    <!-- Chatbot Toggle Button -->
+    <button id="chatToggleButton" class="fixed bottom-6 right-6 bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 z-50 transition-all duration-300" aria-label="Open chatbot">
+        <i class="fas fa-comments text-2xl"></i>
+    </button>
+
+    <!-- Chatbot Modal Overlay -->
+    <div id="chatbotOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 opacity-0 pointer-events-none transition-opacity duration-300"></div>
+
+    <!-- Chatbot UI (now a modal popup) -->
+    <div id="chatbotContainer" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-md h-[500px] bg-white rounded-2xl shadow-2xl overflow-hidden z-50 scale-0 opacity-0 transition-all duration-300 dark:bg-gray-800">
+        <div class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white p-4 flex justify-between items-center rounded-t-2xl">
+            <h3 id="chatbotTitle" class="font-semibold text-lg">NetOptima Assistant</h3>
+            <button id="closeChat" class="text-white hover:text-gray-200 focus:outline-none focus:ring-2 focus:ring-white" aria-label="Close chatbot">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div id="chatMessages" class="p-4 flex-grow overflow-y-auto flex flex-col space-y-4 bg-gray-50 dark:bg-gray-700" role="log" aria-live="polite">
+            <!-- Chat messages will be appended here -->
+        </div>
+        <div class="p-4 border-t border-gray-200 flex items-center dark:border-gray-600">
+            <input type="text" id="chatInput" placeholder="Ask about network metrics..." class="flex-grow p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800 dark:bg-gray-600 dark:border-gray-500 dark:text-white" aria-label="Chat input">
+            <button id="sendButton" class="ml-3 px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500" aria-label="Send message">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- External JavaScript -->
+    <script src="script.js"></script>
+    <!-- jsPDF for Reports -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</body>
+</html>
