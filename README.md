@@ -127,8 +127,9 @@ NetOptima/
 ├── <a href="index.html">index.html</a>                  
 ├── <a href="working_function.js">working_function.js</a> 
 ├── <a href="favicon.ico">favicon.ico</a>                
-├── <a href="assets/">assets/</a>                        
-└── <a href="README.md">README.md</a>                    
+├── <a href="assets/">assets</a> 
+├── <a href="NetOptima Project Report.zip">Project Report</a>   
+└── <a href="README.md">README.md</a>                
   </pre>
 </div>
 
